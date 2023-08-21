@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
     file_list = os.listdir(args.data)
     file_list.sort()
+    print(file_list)
 
     class_counter = 0
     img_counter = 0
@@ -33,6 +34,7 @@ if __name__ == '__main__':
 
     for file_indx in file_list:
         file_name = os.path.join(args.data, file_indx)
+        print(file_name)
 
         cap = cv2.VideoCapture(file_name)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

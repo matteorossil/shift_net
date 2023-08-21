@@ -90,16 +90,17 @@ class Inference:
 
     def infer(self):
         with torch.no_grad():
-            total_psnr = {}
-            total_ssim = {}
+            #total_psnr = {}
+            #total_ssim = {}
             videos = sorted(os.listdir(self.input_path))
+            print(videos)
             # print(len(videos))
             # exit(0)
             for v in videos:
-                video_psnr = []
-                video_ssim = []
+                # video_psnr = []
+                # video_ssim = []
                 input_frames = sorted(glob.glob(os.path.join(self.input_path, v, "*")))
-                gt_frames = sorted(glob.glob(os.path.join(self.GT_path, v, "*")))
+                # gt_frames = sorted(glob.glob(os.path.join(self.GT_path, v, "*")))
                 # print(len(input_frames), len(gt_frames))
                 # print(input_frames[0:4])
                 # exit(0)
@@ -108,53 +109,66 @@ class Inference:
                 # gt_seqs = self.gene_seq(gt_frames, n_seq=self.n_seq)
                 # for in_seq, gt_seq in zip(input_seqs, gt_seqs):
                 # 
-                begin_frames = 2
-                end_frames = 2
-                one_len = self.one_len # len(input_frames) - begin_frames - end_frames
+                # begin_frames = 2
+                # end_frames = 2
+                # one_len = self.one_len # len(input_frames) - begin_frames - end_frames
 
-                k_len = (len(input_frames) - begin_frames - end_frames) // one_len
-                index = 0
+                # k_len = (len(input_frames) - begin_frames - end_frames) // one_len
+                interval = 5
+                k_len = len(input_frames) // interval
+                #index = 0
                 for kk in range(k_len):
                     start_time = time.time()
-                    in_seq = input_frames[kk*one_len+0:kk*one_len+one_len+begin_frames+end_frames]
-                    gt_seq = gt_frames[kk*one_len+begin_frames:kk*one_len+begin_frames+one_len]
+                    # in_seq = input_frames[kk*one_len+0:kk*one_len+one_len+begin_frames+end_frames]
+                    in_seq = input_frames[interval*kk:interval*(kk+1)]
+                    # in_seq = input_frames[interval*kk+1:interval*(kk+1)-1] # 3 frames
+                    # print(in_seq)
+                    # gt_seq = gt_frames[kk*one_len+begin_frames:kk*one_len+begin_frames+one_len]
+                    # gt_seq = gt_frames[interval*kk+2:interval*kk+3]
+                    # print(gt_seq)
+                    # self.n_seq = 3 # 3 frames
                     filename = os.path.basename(in_seq[self.n_seq // 2]).split('.')[0]
+                    # print(filename)
                     inputs = [imageio.imread(p) for p in in_seq]
-                    gts = [imageio.imread(p) for p in gt_seq]
+                    # gts = [imageio.imread(p) for p in gt_seq]
                     h, w, c = inputs[self.n_seq // 2].shape
                     new_h, new_w = h - h % self.size_must_mode, w - w % self.size_must_mode
                     inputs = [im[:new_h, :new_w, :] for im in inputs]
-                    gts = [im[:new_h, :new_w, :] for im in gts]
+                    # gts = [im[:new_h, :new_w, :] for im in gts]
                     in_tensor = self.numpy2tensor(inputs).to(self.device)
                     preprocess_time = time.time()
                     # print(in_tensor.shape)
                     _, _, _, H, W = in_tensor.shape
                     # print(in_tensor.shape)
-
+                    #print(in_tensor.shape)
                     output = self.net(in_tensor.half())
                     #print(output.shape)
                     # exit(0)
                     output = output.float()
                     forward_time = time.time()
-                    for ele in range(one_len):
+                    #for ele in range(one_len):
+                    for ele in range(1):
                         output_img = output[ele].clamp(0,1.0).permute(1,2,0).cpu().numpy()
                         output_img = output_img * 255
-                        psnr = PSNR_(output_img, gts[ele], data_range=255)
-                        ssim = ssim_calculate(output_img, gts[ele])
+                        # psnr = PSNR_(output_img, gts[ele], data_range=255)
+                        # ssim = ssim_calculate(output_img, gts[ele])
                         # print(psnr)
-                        video_psnr.append(psnr)
-                        video_ssim.append(ssim)
-                        total_psnr[v] = video_psnr
-                        total_ssim[v] = video_ssim
+                        # video_psnr.append(psnr)
+                        # video_ssim.append(ssim)
+                        # total_psnr[v] = video_psnr
+                        # total_ssim[v] = video_ssim
                         if self.save_image:
                             if not os.path.exists(os.path.join(self.result_path, v)):
                                 os.mkdir(os.path.join(self.result_path, v))
-                            cv2.imwrite(os.path.join(self.result_path, v, '%03d.png'%index), output_img[...,::-1])
-                            index = index + 1
+                            # cv2.imwrite(os.path.join(self.result_path, v, 'thumb%04d.png'%index), output_img[...,::-1])
+                            cv2.imwrite(os.path.join(self.result_path, v, f'{filename}_deblur.png'), output_img[...,::-1])
+                            # index = index + 1
                     postprocess_time = time.time()
                     del output; del in_tensor
                     torch.cuda.empty_cache()
 
+
+                    """
                     self.logger.write_log(
                         '> {}-{} PSNR={:.5}, SSIM={:.4} pre_time:{:.3}s, forward_time:{:.3}s, post_time:{:.3}s, total_time:{:.3}s'
                             .format(v, filename, psnr, ssim,
@@ -163,8 +177,16 @@ class Inference:
                                     postprocess_time - forward_time,
                                     postprocess_time - start_time))
                     # exit(0)
+                    """
+                    self.logger.write_log(
+                        '> {}-{} pre_time:{:.3}s, forward_time:{:.3}s, post_time:{:.3}s, total_time:{:.3}s'
+                            .format(v, filename,
+                                    preprocess_time - start_time,
+                                    forward_time - preprocess_time,
+                                    postprocess_time - forward_time,
+                                    postprocess_time - start_time))
 
-
+            """
             sum_psnr = 0.
             sum_ssim = 0.
             n_img = 0
@@ -175,6 +197,7 @@ class Inference:
                 sum_ssim += sum(total_ssim[k])
                 n_img += len(total_psnr[k])
             self.logger.write_log("# Total AVG-PSNR={:.5}, AVG-SSIM={:.4}".format(sum_psnr / n_img, sum_ssim / n_img))
+            """
 
     def gene_seq(self, img_list, n_seq):
         if self.border:
@@ -269,23 +292,29 @@ class Inference:
 
 
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser(description='Inference')
 
     parser.add_argument('--save_image', action='store_true', default=False, help='save image if true')
     parser.add_argument('--border', action='store_true', help='restore border images of video if true')
-
-    parser.add_argument('--default_data', type=str, default='.',
-                        help='quick test, optional: DVD, GOPRO')
-    parser.add_argument('--one_len', type=int, default=48)
+    parser.add_argument('--default_data', type=str, default='.', help='quick test, optional: DVD, GOPRO')
+    parser.add_argument('--one_len', type=int, default=1)
     args = parser.parse_args()
+
     if args.default_data == 'DVD':
         args.data_path = './dataset/DVD/test'
         args.model_path = 'pretrained_models/net_dvd_deblur.pth'
         args.result_path = 'infer_results/DVD'
+
     elif args.default_data == 'GOPRO':
         args.data_path = './dataset/GOPRO/test'
         args.model_path = 'pretrained_models/net_gopro_deblur.pth'
-        args.result_path = 'infer_results/gopro'
+        args.result_path = 'infer_results/GOPRO'
+
+    elif args.default_data == 'SAYCAM':
+        args.data_path = '../SAYCAM/test'
+        args.model_path = 'pretrained_models/net_dvd_deblur.pth'
+        args.result_path = 'infer_results/SAYCAM'
 
     Infer = Inference(args)
     Infer.infer()

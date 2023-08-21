@@ -55,6 +55,9 @@ if __name__ == '__main__':
         new_height = frame_height * resized_minor_length // min(frame_height, frame_width)
         new_width = frame_width * resized_minor_length // min(frame_height, frame_width)
 
+        print(new_height)
+        print(new_width)
+
         while (fc < frame_count):
 
             ret, frame = cap.read()

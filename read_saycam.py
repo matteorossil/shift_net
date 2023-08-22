@@ -68,6 +68,8 @@ if __name__ == '__main__':
         #print(new_height)
         #print(new_width)
 
+        """
+
         while (fc < frame_count):
 
             ret, frame = cap.read()
@@ -108,8 +110,11 @@ if __name__ == '__main__':
                     os.mkdir(curr_dir_name)
 
             fc += 1
+        """
 
         cap.release()
 
         file_counter += 1
         print('Completed video {:4d} of {:4d}'.format(file_counter, len(file_list)))
+    
+    print("END")

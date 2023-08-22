@@ -23,6 +23,7 @@ if __name__ == '__main__':
     class_counter = 0
     img_counter = 0
     file_counter = 0
+    tot_frames = 0
 
     final_size = 224
     resized_minor_length = 256
@@ -54,8 +55,11 @@ if __name__ == '__main__':
         print('Total frame count: ', frame_count)
         print('Native frame rate: ', frame_rate)
 
+        tot_frames += frame_count
+        print("tot frames:", tot_frames)
+
         fc = 0
-        ret = True
+        ret = False
 
         # Resize
         new_height = frame_height * resized_minor_length // min(frame_height, frame_width)

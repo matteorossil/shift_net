@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     file_list = os.listdir(args.data)
     file_list.sort()
-    print(file_list)
+    #print(file_list)
 
     class_counter = 0
     img_counter = 0
@@ -67,8 +67,8 @@ if __name__ == '__main__':
 
             ret, frame = cap.read()
 
-            if fc % sample_rate == 0 and ret:
-                #print(fc)
+            #if fc % sample_rate == 0 and ret:
+            if ret:
 
                 # Resize
                 resized_frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_CUBIC)

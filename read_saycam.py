@@ -68,8 +68,7 @@ if __name__ == '__main__':
         #print(new_height)
         #print(new_width)
 
-        #while (fc < frame_count):
-        while False:
+        while (fc < frame_count):
 
             ret, frame = cap.read()
 

@@ -65,7 +65,8 @@ class Inference:
             os.mkdir(self.result_path)
             print('mkdir: {}'.format(self.result_path))
 
-        self.input_path = os.path.join(self.data_path, "blur")
+        #self.input_path = os.path.join(self.data_path, "blur")
+        self.input_path = self.data_path
         self.GT_path = os.path.join(self.data_path, "gt")
 
         now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -161,7 +162,7 @@ class Inference:
                             if not os.path.exists(os.path.join(self.result_path, v)):
                                 os.mkdir(os.path.join(self.result_path, v))
                             # cv2.imwrite(os.path.join(self.result_path, v, 'thumb%04d.png'%index), output_img[...,::-1])
-                            cv2.imwrite(os.path.join(self.result_path, v, f'{filename}_deblur.png'), output_img[...,::-1])
+                            cv2.imwrite(os.path.join(self.result_path, v, f'{filename}.png'), output_img[...,::-1])
                             # index = index + 1
                     postprocess_time = time.time()
                     del output; del in_tensor
@@ -312,9 +313,9 @@ if __name__ == '__main__':
         args.result_path = 'infer_results/GOPRO'
 
     elif args.default_data == 'SAYCAM':
-        args.data_path = '../SAYCAM/test'
-        args.model_path = 'pretrained_models/net_dvd_deblur.pth'
-        args.result_path = 'infer_results/SAYCAM'
+        args.data_path = '/vast/mr6744/SAYCAM'
+        args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
+        args.result_path = '/vast/mr6744/SAYCAM_deblur'
 
     Infer = Inference(args)
     Infer.infer()

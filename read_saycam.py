@@ -31,10 +31,11 @@ if __name__ == '__main__':
 
     curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
     os.mkdir(curr_dir_name)
+    #print(curr_dir_name)
 
     for file_indx in file_list:
         file_name = os.path.join(args.data, file_indx)
-        print(file_name)
+        #print(file_name)
 
         cap = cv2.VideoCapture(file_name)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -42,8 +43,12 @@ if __name__ == '__main__':
         frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
 
+        #print(frame_width)
+        #print(frame_height)
+
         # take every sample_rate frames (30: 1fps, 15: 2fps, 10: 3fps, 6: 5fps, 5: 6fps, 3: 10fps, 2: 15fps, 1: 30fps)
         sample_rate = frame_rate // args.fps + 1
+        #print(sample_rate)
 
         print('Total frame count: ', frame_count)
         print('Native frame rate: ', frame_rate)
@@ -55,23 +60,30 @@ if __name__ == '__main__':
         new_height = frame_height * resized_minor_length // min(frame_height, frame_width)
         new_width = frame_width * resized_minor_length // min(frame_height, frame_width)
 
-        print(new_height)
-        print(new_width)
+        #print(new_height)
+        #print(new_width)
 
         while (fc < frame_count):
 
             ret, frame = cap.read()
 
             if fc % sample_rate == 0 and ret:
+                #print(fc)
 
                 # Resize
                 resized_frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_CUBIC)
 
                 # Crop
                 height, width, _ = resized_frame.shape
+                #print("height", height)
+                #print(width)
                 startx = width // 2 - (final_size // 2)
+                #print(startx)
                 starty = height // 2 - (final_size // 2) - 16
+                #print(starty)
                 cropped_frame = resized_frame[starty:starty + final_size, startx:startx + final_size]
+                #print(cropped_frame.shape[0])
+                #print(cropped_frame.shape[1])
                 assert cropped_frame.shape[0] == final_size and cropped_frame.shape[1] == final_size, \
                     (cropped_frame.shape, height, width)
 

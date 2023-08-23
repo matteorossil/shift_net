@@ -7,6 +7,8 @@ import cv2
 import math
 import time
 import argparse
+import sys
+sys.path.append(os.getcwd())
 from basicsr.models.archs.gshift_deblur1 import GShiftNet
 from skimage.metrics import structural_similarity as SSIM_
 from skimage.metrics import peak_signal_noise_ratio as PSNR_

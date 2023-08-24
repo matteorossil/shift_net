@@ -5,7 +5,7 @@ import shutil
 
 parser = argparse.ArgumentParser(description='Read SAYCam videos')
 parser.add_argument('--data', default='/vast/mr6744/SAYCAM', type=str, help='save directory')
-parser.add_argument('--save-dir', default='/vast/mr6744/SAYCAM_deblur', type=str, help='save directory')
+parser.add_argument('--save-dir', default='/vast/mr6744/SAYCAM_blur', type=str, help='save directory')
 
 if __name__ == '__main__':
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
         img_counter = 0
 
         curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-        os.mkdir(curr_dir_name)
+        #os.mkdir(curr_dir_name)
 
         dir_path = os.path.join(args.data, class_)
 

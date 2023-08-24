@@ -21,7 +21,7 @@ if __name__ == '__main__':
         img_counter = 0
 
         curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-        #os.mkdir(curr_dir_name)
+        os.mkdir(curr_dir_name)
 
         dir_path = os.path.join(args.data, class_)
 
@@ -32,10 +32,10 @@ if __name__ == '__main__':
 
             if (img_counter - 2) % 5 == 0:
                 image_path = os.path.join(dir_path, img)
-                print(image_path)
+                #print(image_path)
                 image_dest_path = os.path.join(curr_dir_name, img)
-                print(image_dest_path)
-                # shutil.copy(image_path, image_dest_path)
+                #print(image_dest_path)
+                shutil.copy(image_path, image_dest_path)
 
             img_counter += 1
 

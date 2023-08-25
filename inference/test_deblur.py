@@ -317,7 +317,7 @@ if __name__ == '__main__':
     elif args.default_data == 'SAYCAM':
         args.data_path = '/vast/mr6744/SAYCAM'
         args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
-        args.result_path = '/vast/mr6744/SAYCAM_deblur'
+        args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
 
     Infer = Inference(args)
     Infer.infer()

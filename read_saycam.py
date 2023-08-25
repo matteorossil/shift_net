@@ -104,6 +104,7 @@ if __name__ == '__main__':
 
                 #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
                 cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
+                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}_.jpeg'.format(img_counter)), frame)
                 img_counter += 1
 
                 if img_counter % n_imgs_per_class == 0:

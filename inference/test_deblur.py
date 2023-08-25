@@ -315,7 +315,7 @@ if __name__ == '__main__':
         args.result_path = 'infer_results/GOPRO'
 
     elif args.default_data == 'SAYCAM':
-        args.data_path = '/vast/mr6744/SAYCAM'
+        args.data_path = '/vast/mr6744/SAYCAM_large'
         args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
         args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
 

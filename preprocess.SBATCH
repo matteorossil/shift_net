@@ -3,8 +3,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
-#SBATCH --time=0:10:00
-#SBATCH --mem=50GB
+#SBATCH --time=12:00:00
+#SBATCH --mem=100GB
 #SBATCH --job-name=saycam
 #SBATCH --output=/scratch/mr6744/pytorch/outputs_slurm/%j.out
 

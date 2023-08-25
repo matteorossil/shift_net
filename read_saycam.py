@@ -102,7 +102,6 @@ if __name__ == '__main__':
                 """
 
                 #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
-                print(frame.shape)
                 cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
                 img_counter += 1
 
@@ -113,6 +112,9 @@ if __name__ == '__main__':
                     os.mkdir(curr_dir_name)
 
             fc += 1
+
+            if class_counter == 400:
+                break
 
         cap.release()
 

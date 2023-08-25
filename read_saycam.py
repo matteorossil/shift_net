@@ -68,14 +68,14 @@ if __name__ == '__main__':
         #print(new_height)
         #print(new_width)
 
-        """
-
         while (fc < frame_count):
 
             ret, frame = cap.read()
 
             #if fc % sample_rate == 0 and ret:
             if ret:
+
+                """
 
                 # Resize
                 resized_frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_CUBIC)
@@ -99,8 +99,11 @@ if __name__ == '__main__':
                     img_min = cropped_frame.min()
                     img_max = cropped_frame.max()
                     cropped_frame = np.uint8(255 * (cropped_frame - img_min) / (img_max - img_min))
+                
+                """
 
-                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
+                #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
+                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
                 img_counter += 1
 
                 if img_counter % n_imgs_per_class == 0:
@@ -110,7 +113,6 @@ if __name__ == '__main__':
                     os.mkdir(curr_dir_name)
 
             fc += 1
-        """
 
         cap.release()
 

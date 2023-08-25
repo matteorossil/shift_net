@@ -41,19 +41,19 @@ if __name__ == '__main__':
 
         cap = cv2.VideoCapture(file_name)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
+        #frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        #frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
+        #frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
         #print(frame_width)
         #print(frame_height)
 
         # take every sample_rate frames (30: 1fps, 15: 2fps, 10: 3fps, 6: 5fps, 5: 6fps, 3: 10fps, 2: 15fps, 1: 30fps)
-        sample_rate = frame_rate // args.fps + 1
+        #sample_rate = frame_rate // args.fps + 1
         #print(sample_rate)
 
-        print('Total frame count: ', frame_count)
-        print('Native frame rate: ', frame_rate)
+        #print('Total frame count: ', frame_count)
+        #print('Native frame rate: ', frame_rate)
 
         tot_frames += frame_count
         print("tot frames:", tot_frames)
@@ -62,8 +62,8 @@ if __name__ == '__main__':
         ret = True
 
         # Resize
-        new_height = frame_height * resized_minor_length // min(frame_height, frame_width)
-        new_width = frame_width * resized_minor_length // min(frame_height, frame_width)
+        #new_height = frame_height * resized_minor_length // min(frame_height, frame_width)
+        #new_width = frame_width * resized_minor_length // min(frame_height, frame_width)
 
         #print(new_height)
         #print(new_width)
@@ -76,7 +76,6 @@ if __name__ == '__main__':
             if ret:
 
                 """
-
                 # Resize
                 resized_frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_CUBIC)
 
@@ -103,8 +102,8 @@ if __name__ == '__main__':
                 """
 
                 #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
+                print(frame.shape)
                 cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
-                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}_.jpeg'.format(img_counter)), frame)
                 img_counter += 1
 
                 if img_counter % n_imgs_per_class == 0:

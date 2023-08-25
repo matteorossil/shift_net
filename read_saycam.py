@@ -32,7 +32,7 @@ if __name__ == '__main__':
     n_imgs_per_class = 2500
 
     curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-    #os.mkdir(curr_dir_name)
+    os.mkdir(curr_dir_name)
     #print(curr_dir_name)
 
     for file_indx in file_list:

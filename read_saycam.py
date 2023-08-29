@@ -32,7 +32,7 @@ if __name__ == '__main__':
     n_imgs_per_class = 2500
 
     curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-    os.mkdir(curr_dir_name)
+    #os.mkdir(curr_dir_name)
     #print(curr_dir_name)
 
     for file_indx in file_list:
@@ -41,19 +41,19 @@ if __name__ == '__main__':
 
         cap = cv2.VideoCapture(file_name)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        #frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        #frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
-        #frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
+        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-        #print(frame_width)
-        #print(frame_height)
+        print("frame_width", frame_width)
+        print("frame_height", frame_height)
 
         # take every sample_rate frames (30: 1fps, 15: 2fps, 10: 3fps, 6: 5fps, 5: 6fps, 3: 10fps, 2: 15fps, 1: 30fps)
-        #sample_rate = frame_rate // args.fps + 1
+        sample_rate = frame_rate // args.fps + 1
         #print(sample_rate)
 
-        #print('Total frame count: ', frame_count)
-        #print('Native frame rate: ', frame_rate)
+        print('Total frame count: ', frame_count)
+        print('Native frame rate: ', frame_rate)
 
         tot_frames += frame_count
         print("tot frames:", tot_frames)
@@ -62,11 +62,11 @@ if __name__ == '__main__':
         ret = True
 
         # Resize
-        #new_height = frame_height * resized_minor_length // min(frame_height, frame_width)
-        #new_width = frame_width * resized_minor_length // min(frame_height, frame_width)
+        new_height = frame_height * resized_minor_length // min(frame_height, frame_width)
+        new_width = frame_width * resized_minor_length // min(frame_height, frame_width)
 
-        #print(new_height)
-        #print(new_width)
+        print("new height", new_height)
+        print("new_width", new_width)
 
         while (fc < frame_count):
 
@@ -75,21 +75,20 @@ if __name__ == '__main__':
             #if fc % sample_rate == 0 and ret:
             if ret:
 
-                """
                 # Resize
                 resized_frame = cv2.resize(frame, (new_width, new_height), interpolation=cv2.INTER_CUBIC)
 
                 # Crop
                 height, width, _ = resized_frame.shape
-                #print("height", height)
-                #print(width)
+                print("height", height)
+                print("width", width)
                 startx = width // 2 - (final_size // 2)
-                #print(startx)
+                print("start_x", startx)
                 starty = height // 2 - (final_size // 2) - 16
-                #print(starty)
+                print("start_y", starty)
                 cropped_frame = resized_frame[starty:starty + final_size, startx:startx + final_size]
-                #print(cropped_frame.shape[0])
-                #print(cropped_frame.shape[1])
+                print(cropped_frame.shape[0])
+                print(cropped_frame.shape[1])
                 assert cropped_frame.shape[0] == final_size and cropped_frame.shape[1] == final_size, \
                     (cropped_frame.shape, height, width)
 
@@ -98,22 +97,20 @@ if __name__ == '__main__':
                     img_min = cropped_frame.min()
                     img_max = cropped_frame.max()
                     cropped_frame = np.uint8(255 * (cropped_frame - img_min) / (img_max - img_min))
-                
-                """
 
                 #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
-                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
+                #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
                 img_counter += 1
 
                 if img_counter % n_imgs_per_class == 0:
                     #img_counter = 0
                     class_counter += 1
                     curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-                    os.mkdir(curr_dir_name)
+                    #os.mkdir(curr_dir_name)
 
             fc += 1
 
-            if class_counter == 400:
+            if class_counter == 399:
                 break
 
         cap.release()

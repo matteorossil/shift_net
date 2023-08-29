@@ -99,7 +99,7 @@ class Inference:
             print(videos)
             # print(len(videos))
             # exit(0)
-            for v in videos:
+            for v in videos[200:]:
                 # video_psnr = []
                 # video_ssim = []
                 input_frames = sorted(glob.glob(os.path.join(self.input_path, v, "*")))
@@ -317,7 +317,7 @@ if __name__ == '__main__':
     elif args.default_data == 'SAYCAM':
         args.data_path = '/vast/mr6744/SAYCAM_large'
         args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
-        args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
+        args.result_path = '/vast/mr6744/SAYCAM_large_deblur2'
 
     Infer = Inference(args)
     Infer.infer()

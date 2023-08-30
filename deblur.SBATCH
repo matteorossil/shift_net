@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=20
-#SBATCH --time=48:00:00
+#SBATCH --time=60:00:00
 #SBATCH --mem=100GB
 #SBATCH --gres=gpu:1
 #SBATCH --job-name=deblur_saycam

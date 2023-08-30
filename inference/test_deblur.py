@@ -99,7 +99,7 @@ class Inference:
             print(videos)
             # print(len(videos))
             # exit(0)
-            for v in videos[200:]:
+            for v in videos[195:]:
                 # video_psnr = []
                 # video_ssim = []
                 input_frames = sorted(glob.glob(os.path.join(self.input_path, v, "*")))

@@ -62,6 +62,8 @@ class Inference:
         self.size_must_mode = 4
         self.device = 'cuda'
         self.one_len = args.one_len
+        self.start = args.start_videos
+        self.end = args.end_videos
 
         if not os.path.exists(self.result_path):
             os.mkdir(self.result_path)
@@ -99,7 +101,7 @@ class Inference:
             print(videos)
             # print(len(videos))
             # exit(0)
-            for v in videos[195:]:
+            for v in videos[self.start:self.end]:
                 # video_psnr = []
                 # video_ssim = []
                 input_frames = sorted(glob.glob(os.path.join(self.input_path, v, "*")))
@@ -302,6 +304,8 @@ if __name__ == '__main__':
     parser.add_argument('--border', action='store_true', help='restore border images of video if true')
     parser.add_argument('--default_data', type=str, default='.', help='quick test, optional: DVD, GOPRO')
     parser.add_argument('--one_len', type=int, default=1)
+    parser.add_argument('--start_videos', type=int, default=0)
+    parser.add_argument('--end_videos', type=int, default=0)
     args = parser.parse_args()
 
     if args.default_data == 'DVD':
@@ -317,7 +321,7 @@ if __name__ == '__main__':
     elif args.default_data == 'SAYCAM':
         args.data_path = '/vast/mr6744/SAYCAM_large'
         args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
-        args.result_path = '/vast/mr6744/SAYCAM_large_deblur2'
+        args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
 
     Infer = Inference(args)
     Infer.infer()

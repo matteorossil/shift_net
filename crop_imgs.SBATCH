@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
-#SBATCH --time=0:10:00
+#SBATCH --time=10:00:00
 #SBATCH --mem=20GB
 #SBATCH --job-name=crop_imgs
 #SBATCH --output=/scratch/mr6744/pytorch/outputs_slurm/%j.out

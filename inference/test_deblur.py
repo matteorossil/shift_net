@@ -166,7 +166,11 @@ class Inference:
                             if not os.path.exists(os.path.join(self.result_path, v)):
                                 os.mkdir(os.path.join(self.result_path, v))
                             # cv2.imwrite(os.path.join(self.result_path, v, 'thumb%04d.png'%index), output_img[...,::-1])
-                            cv2.imwrite(os.path.join(self.result_path, v, f'{filename}.png'), output_img[...,::-1])
+                            #output_img = cv2.flip(output_img, -1)
+                            resized_frame = cv2.resize(output_img, (341, 256), interpolation=cv2.INTER_CUBIC)
+                            cropped_frame = resized_frame[0:0 + 224, 58:58 + 224]
+                            cv2.imwrite(os.path.join(self.result_path, v, f'{filename}.png'), cropped_frame[...,::-1])
+                            #cv2.imwrite(os.path.join(self.result_path, v, f'{filename}.png'), output_img[...,::-1])
                             # index = index + 1
                     postprocess_time = time.time()
                     del output; del in_tensor
@@ -319,9 +323,12 @@ if __name__ == '__main__':
         args.result_path = 'infer_results/GOPRO'
 
     elif args.default_data == 'SAYCAM':
-        args.data_path = '/vast/mr6744/SAYCAM_large'
-        args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
-        args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
-
+        #args.data_path = '/vast/mr6744/SAYCAM_large'
+        #args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
+        #args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
+        args.data_path = '/home/mr6744/SAYCAM/'
+        args.model_path = '/home/mr6744/Shift-Net/pretrained_models/net_dvd_deblur.pth'
+        args.result_path = '/home/mr6744/SAYCAM_post'
+    
     Infer = Inference(args)
     Infer.infer()

@@ -2,7 +2,6 @@ import os
 import argparse
 import shutil
 
-
 parser = argparse.ArgumentParser(description='Read SAYCam videos')
 parser.add_argument('--data', default='/vast/mr6744/SAYCAM', type=str, help='save directory')
 parser.add_argument('--save-dir', default='/vast/mr6744/SAYCAM_blur', type=str, help='save directory')

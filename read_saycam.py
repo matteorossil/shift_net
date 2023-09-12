@@ -32,7 +32,7 @@ if __name__ == '__main__':
     n_imgs_per_class = 2500
 
     curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-    #os.mkdir(curr_dir_name)
+    os.mkdir(curr_dir_name)
     #print(curr_dir_name)
 
     for file_indx in file_list:
@@ -99,14 +99,14 @@ if __name__ == '__main__':
                     cropped_frame = np.uint8(255 * (cropped_frame - img_min) / (img_max - img_min))
 
                 #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
-                #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
+                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
                 img_counter += 1
 
                 if img_counter % n_imgs_per_class == 0:
                     #img_counter = 0
                     class_counter += 1
                     curr_dir_name = os.path.join(args.save_dir, 'class_{:04d}'.format(class_counter))
-                    #os.mkdir(curr_dir_name)
+                    os.mkdir(curr_dir_name)
 
             fc += 1
 

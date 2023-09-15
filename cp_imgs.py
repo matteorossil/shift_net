@@ -28,7 +28,6 @@ if __name__ == '__main__':
 
         for img in imgs:
 
-
             if (img_counter - 2) % 5 == 0:
                 image_path = os.path.join(dir_path, img)
                 #print(image_path)

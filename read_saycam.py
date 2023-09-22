@@ -35,7 +35,7 @@ if __name__ == '__main__':
     os.mkdir(curr_dir_name)
     #print(curr_dir_name)
 
-    for file_indx in file_list:
+    for file_indx in file_list[500:]:
         file_name = os.path.join(args.data, file_indx)
         #print(file_name)
 
@@ -98,8 +98,8 @@ if __name__ == '__main__':
                     img_max = cropped_frame.max()
                     cropped_frame = np.uint8(255 * (cropped_frame - img_min) / (img_max - img_min))
 
-                #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
-                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
+                cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), cropped_frame[::-1, ::-1, :])
+                #cv2.imwrite(os.path.join(curr_dir_name, 'img_{:04d}.jpeg'.format(img_counter)), frame[::-1, ::-1, :])
                 img_counter += 1
 
                 if img_counter % n_imgs_per_class == 0:

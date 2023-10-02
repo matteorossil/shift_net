@@ -119,13 +119,13 @@ class Inference:
                 # one_len = self.one_len # len(input_frames) - begin_frames - end_frames
 
                 # k_len = (len(input_frames) - begin_frames - end_frames) // one_len
-                interval = 5
+                interval = 1
                 k_len = len(input_frames) // interval
                 #index = 0
-                for kk in range(k_len):
+                for kk in range(k_len-4):
                     start_time = time.time()
                     # in_seq = input_frames[kk*one_len+0:kk*one_len+one_len+begin_frames+end_frames]
-                    in_seq = input_frames[interval*kk:interval*(kk+1)]
+                    in_seq = input_frames[interval*kk:interval*(kk+5)]
                     # in_seq = input_frames[interval*kk+1:interval*(kk+1)-1] # 3 frames
                     # print(in_seq)
                     # gt_seq = gt_frames[kk*one_len+begin_frames:kk*one_len+begin_frames+one_len]
@@ -325,7 +325,7 @@ if __name__ == '__main__':
     elif args.default_data == 'SAYCAM':
         args.data_path = '/vast/mr6744/SAYCAM_large'
         args.model_path = '/scratch/mr6744/pytorch/Shift-Net/pretrained_models/net_dvd_deblur.pth'
-        args.result_path = '/vast/mr6744/SAYCAM_large_deblur'
+        args.result_path = '/vast/mr6744/SAYCAM_1M_deblur'
         #args.data_path = '/home/mr6744/SAYCAM/'
         #args.model_path = '/home/mr6744/Shift-Net/pretrained_models/net_dvd_deblur.pth'
         #args.result_path = '/home/mr6744/SAYCAM_post'

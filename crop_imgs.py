@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    class_list = os.listdir(args.data)[300:] ## remove after
+    class_list = os.listdir(args.data)[276:300] ## remove after
     print(class_list)
 
     for class_ in class_list:
